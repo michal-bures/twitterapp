@@ -6,6 +6,8 @@
     "react-scripts": "0.7.0"
   },
   "dependencies": {
+    "assert": "^1.4.1",
+    "moment": "^2.15.1",
     "oauth": "^0.9.14",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.5",

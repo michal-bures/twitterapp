@@ -22,7 +22,7 @@ function requestAuthToken(callback) {
 
 var cache = {};
 
-// Request OAuth2 auth token if not yet hardcodeds
+// Request OAuth2 auth token if not yet hardcoded
 if (!AUTH.TOKEN) {
     requestAuthToken((e, token) => {
         if (e) throw e;
@@ -36,6 +36,8 @@ if (!AUTH.TOKEN) {
         bearer_token: AUTH.TOKEN,
     });
     let httpServer = express();
+
+    httpServer.use("/", express.static('../public'));
 
     httpServer.get('/tweets', function(request, resp) {
         let user = url.parse(request.url, true).query.u;
