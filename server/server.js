@@ -4,12 +4,15 @@ const url = require("url");
 const OAuth2 = require('OAuth').OAuth2; 
 const Twitter = require('Twitter');
 const express = require('express');
+const path = require('path');
 
 const AUTH = {
     KEY : 'OYKM1yVJUdVf1RTSCyVkbIDBl',
     SECRET : 'GOdwA5fUK1JL7bgjvhabHKBIQaneygOrcuxfyFHNx2Hbr8Daus',
     TOKEN : 'AAAAAAAAAAAAAAAAAAAAANV6xgAAAAAAt0mlXSXMIXTg7wS%2F5qgyXPFDykU%3DGKjbaEJlC6qiImrFD63gOTulbLEpwysku6n0QgrnvJGvxMvCxF'
 }
+
+const HTTP_PORT = 3001;
 
 function requestAuthToken(callback) {
     let oauth2 = new OAuth2(AUTH.KEY, AUTH.SECRET, 'https://api.twitter.com/', null, 'oauth2/token', null);
@@ -35,7 +38,7 @@ if (!AUTH.TOKEN) {
     });
     let httpServer = express();
 
-    httpServer.use("/", express.static('../public'));
+    httpServer.use(express.static(__dirname + '/../build'));
 
     httpServer.get('/tweets', function(request, resp) {
         let user = url.parse(request.url, true).query.u;
@@ -51,6 +54,7 @@ if (!AUTH.TOKEN) {
         });
       });
 
-    httpServer.listen(3001);
+    console.log('Listening on localhost:'+HTTP_PORT);
+    httpServer.listen(HTTP_PORT);
 }
 

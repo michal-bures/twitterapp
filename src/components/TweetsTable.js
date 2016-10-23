@@ -57,8 +57,11 @@ class TweetsTable extends Component {
 
         function headerCell(title, id) {
             return (
-                <th className='clickable'
+                <th className='clickable no-wrap'
                     onClick={self.toggleSort.bind(self,id)}>
+                    {(self.state.orderBy === id ? 
+                        <Glyphicon glyph={(self.state.ascending?"chevron-up":"chevron-down")}/>
+                    :[])}
                     {title}
                 </th>
             ); 

@@ -3,6 +3,10 @@
     cursor: pointer;   
 }
 
+.no-wrap {
+    white-space: nowrap;
+}
+
 .spinning {
   -webkit-animation: spin 2s infinite linear;
   -moz-animation: spin 2s infinite linear;
