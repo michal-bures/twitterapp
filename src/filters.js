@@ -1,10 +1,12 @@
 import assert from 'assert';
+import globals from './globals';
 
 class Filter {
-    constructor(label, field, filterFunc) {
+    constructor(label, prompt, field, filterFunc) {
         this._label = label;
         this._field = field;
         this._filterFunc = filterFunc;
+        this._prompt = 'Enter '+(prompt || 'text');
     }
 
     apply(item, value) {
@@ -15,6 +17,10 @@ class Filter {
 
     get label() {
         return this._label
+    }
+
+    get prompt() {
+        return this._prompt
     }
 
 }
@@ -31,8 +37,7 @@ function listContains(list, filterBy) {
 }
 
 function dateContains(date, filterBy) {
-    assert.equal(typeof date.format, 'function');
-    return date.format('lll').includes(filterBy);
+    return date.format(globals.DATE_FORMAT).includes(filterBy);
 }
 
 function minLength(obj, filterBy) {
@@ -45,12 +50,12 @@ function minValue(value, filterBy) {
 }
 
 export default {
-    date: new Filter('Sent date','date',dateContains),
-    fullText: new Filter('Contains','text',textContains),
-    tweetLength: new Filter('Length','text', minLength),
-    favourites: new Filter('Num. of likes','favs', minValue),
-    mentions: new Filter('Num. of @mentions','mentions', minLength),
-    hashtags: new Filter('Num. of #hastags','hashtags', minLength),
-    mention: new Filter('Contains @mention','mentions', listContains),
-    hashtag: new Filter('Contains #hashtag','hashtags', listContains)
+    date: new Filter('Sent date','date','date',dateContains),
+    fullText: new Filter('Contains','text','text',textContains),
+    tweetLength: new Filter('Length','minimal length of tweets','text', minLength),
+    favourites: new Filter('Num. of likes','minimal number of likes','favs', minValue),
+    mentions: new Filter('Num. of @mentions','minimal number of @mentions in tweet','mentions', minLength),
+    hashtags: new Filter('Num. of #hastags','minimal number of #hashtags in tweet','hashtags', minLength),
+    mention: new Filter('Contains @mention','specific @mention','mentions', listContains),
+    hashtag: new Filter('Contains #hashtag','specific @hashtag','hashtags', listContains)
 };

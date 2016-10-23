@@ -5,11 +5,11 @@ class FilterEditor extends Component {
 
     render() {
         return (
-            <FormGroup>
+            <FormGroup bsSize="small">
                 <Col sm={3}><ControlLabel>{this.props.label}</ControlLabel></Col>
                 <Col sm={9}><FormControl
                     type="text"
-                    placeholder="Enter text"
+                    placeholder={this.props.placeholder}
                     onChange={(event) => { 
                         this.props.onChange(event.target.value);  
                     }}

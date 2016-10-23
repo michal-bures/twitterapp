@@ -5,7 +5,7 @@ class Stats extends Component {
         const tweets = this.props.tweets;
 
         const totalLikes = tweets.reduce((sum, curr) => sum + curr.favs, 0);
-        const avgLikes = totalLikes / tweets.size;
+        const avgLikes = (totalLikes / tweets.size).toFixed(1);
         const mentions = tweets.reduce((obj,curr) => {
             curr.mentions.forEach(m => obj[m] = ++obj[m] || 1);
             return obj;

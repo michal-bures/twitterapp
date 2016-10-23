@@ -18,9 +18,7 @@ function requestAuthToken(callback) {
     }, callback);
 }
 
-/** Entry point */
-
-var cache = {};
+// --- Entry point ---
 
 // Request OAuth2 auth token if not yet hardcoded
 if (!AUTH.TOKEN) {
@@ -43,13 +41,12 @@ if (!AUTH.TOKEN) {
         let user = url.parse(request.url, true).query.u;
         if (!user) return resp.status(400).send("No user specified");
 
-        if (cache[user]) {
-            return resp.status(200).send(cache[user]);
-        }
-
-        twitter.get('statuses/user_timeline', {screen_name: user, count: 50, include_entities: true}, function(error, tweets, response) {
-            if (error) return resp.status(500).send(error);
-            cache[user] = tweets;
+        twitter.get('statuses/user_timeline', {
+            screen_name: user, 
+            count: 50, 
+            include_entities: true
+        }, function(error, tweets, response) {
+            if (error) return resp.status(400).send(error);
             resp.status(200).send(tweets);
         });
       });

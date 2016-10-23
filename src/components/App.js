@@ -1,30 +1,31 @@
-import 'whatwg-fetch';
 import React, { Component } from 'react';
-import { PageHeader, Modal, Table, Panel, Glyphicon, Form } from 'react-bootstrap';
+import { Alert, Modal, Panel, Form } from 'react-bootstrap';
+import 'whatwg-fetch';
 import assert from 'assert';
 import moment from 'moment';
+
 import Immutable from 'immutable';
+
 import SearchBox from './SearchBox.js';
-import filters from './filters.js';
+import filters from '../filters.js';
 import FilterEditor from './FilterEditor.js';
 import Stats from './Stats.js';
+import TweetsTable from './TweetsTable.js';
 
 class App extends Component {
     constructor() {
         super();
         this.state = {
             // read-only model (list of tweets)
-            tweets : Immutable.List(),
+            tweets : null,
             // whether the client is currently waiting for results to be fetched from server
-            fetching : true,
-            // key used for table ordering
-            orderBy : 'id',
-            // wheter the table is sorted in ascending (true) or descending (false) order 
-            ascending : true,
+            fetching : false,
             // active filter values (mapped by index of filter)
             filterValues : Immutable.Map(),
             // whether the statistics modal window is currently displayed
-            showStats : false
+            showStats : false,
+            // displayed error message
+            error: null,
         }
         // listing of available filters
         this.filters = [
@@ -37,21 +38,29 @@ class App extends Component {
             filters.hashtag,
             filters.mention
         ];
-        //Temporary
-        this.fetchTweets('reactjs');
     }
 
     fetchTweets(user) {
-        //TODO url encode
-        //if (this.isMounted) this.setState({fetching:true});
-        fetch("/tweets?u="+user).then((response) => {
-            //TODO error handling
+        this.setState({fetching:true, error:null});
+        fetch("/tweets?u="+encodeURIComponent(user)).then((response) => {
+            if (!this.state.fetching) return; // we no longer want the data
             this.setState({fetching:false});
-            return response.text();
+            if (response.status >= 200 && response.status < 300) {
+                return response.text();
+            } else if (response.status >= 400 && response.status < 500) {
+                this.showError('No data for this user!');
+            } else {
+                this.showError('Ooops! Something went wrong while fetching user data from Twitter. (Code '+response.status+')');
+            }
         }).then((body)=> {
-            console.log(JSON.parse(body));
-            this.loadTweets(Array.from(JSON.parse(body)));
+            if (body) {
+                this.loadTweets(Array.from(JSON.parse(body)));
+            }
         });
+    }
+
+    showError(err) {
+        this.setState({error: err});
     }
 
     // show statistics modal
@@ -72,13 +81,18 @@ class App extends Component {
                 text: tweet.text,
                 favs: Number.parseInt(tweet.favorite_count, 10),
                 retweets: Number.parseInt(tweet.retweet_count, 10),
-                date: moment(tweet.created_at),
+                date: moment(tweet.created_at,'ddd MMM D HH:mm:ss Z'),
                 mentions: tweet.entities.user_mentions.map(m => m.screen_name),
                 hashtags: tweet.entities.hashtags.map(h => h.text)
             }
         });
 
         this.setState({tweets: Immutable.List(transformed)});
+    }
+
+    // forget results
+    resetResults() {
+        this.setState({tweets: null, error: null })
     }
 
     // toggle table ordering by the specified field
@@ -93,81 +107,86 @@ class App extends Component {
 
     render() {
 
-        // apply filters and sorting to the tweet list
-        var displayList = this.state.tweets
-            // apply filters
-            .filter((item) => {
-                // ok only if all filters match
-                return this.filters.every((filter, i) => {
-                    if (!filter.apply(item, this.state.filterValues.get(i))) {
-                        console.log("failed filter", filter.label);
-                        return false;
-                    }
-                    return true;
-                });
-            })
-            // apply sorting
-            .sort((a,b) => {
-                const va = a[this.state.orderBy];
-                const vb = b[this.state.orderBy];
-                if (va === vb) return 0;
-                if (va > vb) return 1 * (this.state.ascending?1:-1);
-                return -1 * (this.state.ascending?1:-1);
-        })
+        const renderResults=() => {
+            if (this.state.fetching) {
+                // currently loading data - show nothing
+                return;
+            } else if (this.state.error) {
+                // error occured while getting data - display it 
+                return (
+                    <Alert bsStyle="danger">
+                      <p>{this.state.error}</p>
+                    </Alert>
+                );
+            } else if (!this.state.tweets) {
+                // waiting for user selection - show nothing
+                return;
+            } else {
+                // display results
+                // apply filters and sorting to the tweet list
+                var displayList = this.state.tweets
+                    // apply filters
+                    .filter((item) => {
+                        // ok only if all filters match
+                        return this.filters.every((filter, i) => {
+                            if (!filter.apply(item, this.state.filterValues.get(i))) {
+                                return false;
+                            }
+                            return true;
+                        });
+                    })
+                    // apply sorting
+                    .sort((a,b) => {
+                        const va = a[this.state.orderBy];
+                        const vb = b[this.state.orderBy];
+                        if (va === vb) return 0;
+                        if (va > vb) return 1 * (this.state.ascending?1:-1);
+                        return -1 * (this.state.ascending?1:-1);
+                })
 
+                return (
+                    <div>
+                    <Panel
+                        header="Filters"
+                        collapsible
+                    >
+                        <Form horizontal bsSize="small">
+                        {this.filters.map((filter, key) => { return (
+                            <FilterEditor key={key}
+                                label={filter.label}
+                                value={this.state.filterValues.get(key)}
+                                placeholder={filter.prompt}
+                                onChange={(value) => {
+                                    this.setState({filterValues : this.state.filterValues.set(key, value)});
+                                }}
+                            />
+                        )})}
+                        </Form>
+                    </Panel>
+                    <a href="#" onClick={this.showStats.bind(this)}>Show statistics</a>
+                    <TweetsTable tweets={displayList}/>
+                    <Modal show={this.state.showStats} onHide={this.hideStats.bind(this)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Statistics</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Stats tweets={this.state.tweets}/>
+                        </Modal.Body>
+                    </Modal> 
+                    </div>               
+                );            }
+
+        }
 
         return (
             <div className="container">
-                <PageHeader>Twitter browser</PageHeader>
-                <SearchBox onClick={this.fetchTweets.bind(this)}/>
-                <Panel
-                    header="Filters"
-                    collapsible
-                    defaultExpanded
-                >
-                    <Form horizontal>
-                    {this.filters.map((filter, key) => { return (
-                        <FilterEditor key={key}
-                            label={filter.label}
-                            value={this.state.filterValues.get(key)}
-                            onChange={(value) => {
-                                this.setState({filterValues : this.state.filterValues.set(key, value)});
-                            }}
-                        />
-                    )})}
-                    </Form>
-                </Panel>
-                <a href="#" onClick={this.showStats.bind(this)}>Show statistics</a>
-                <Table striped bordered condensed hover>
-                    <thead>
-                        <tr>
-                            <th onClick={this.toggleSort.bind(this,'id')}>#</th>
-                            <th onClick={this.toggleSort.bind(this,'text')}>text</th>
-                            <th onClick={this.toggleSort.bind(this,'favs')}><Glyphicon glyph="star"/></th>
-                            <th onClick={this.toggleSort.bind(this,'date')}>sent at</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                         {displayList.map((tweet, i)=> {
-                            return (
-                                <tr key={tweet.id}>
-                                    <td>{tweet.id}</td>
-                                    <td>{tweet.text}</td>
-                                    <td>{tweet.favs}</td>
-                                    <td>{tweet.date.format('lll')}</td>
-                                </tr>
-                            )                            
-                         })}
-                    </tbody>
-                </Table>
-                <Modal show={this.state.showStats} onHide={this.hideStats.bind(this)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Statistics</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Stats tweets={this.state.tweets}/>
-                    </Modal.Body>
-                </Modal>
+                <h2>Twitter browser demo</h2>
+                <SearchBox 
+                    fetching={this.state.fetching}
+                    onSubmit={this.fetchTweets.bind(this)}
+                    onChange={this.resetResults.bind(this)}
+                />
+                {renderResults()}
             </div>
         );
     }
