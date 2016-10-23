@@ -47,7 +47,7 @@ if (!AUTH.TOKEN) {
             return resp.status(200).send(cache[user]);
         }
 
-        twitter.get('statuses/user_timeline', {screen_name: user, count: 50}, function(error, tweets, response) {
+        twitter.get('statuses/user_timeline', {screen_name: user, count: 50, include_entities: true}, function(error, tweets, response) {
             if (error) return resp.status(500).send(error);
             cache[user] = tweets;
             resp.status(200).send(tweets);

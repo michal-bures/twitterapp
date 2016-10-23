@@ -17,18 +17,11 @@ class SearchBox extends Component {
     }
 
     render() {
-        /*console.log("FETCHING");
-        fetch("/tweets?u=totalbiscuit").then((response) => {
-          return response.text();
-        }).then((body)=> {
-          console.log(body);
-        });;*/
-
         return (
             <form onSubmit={this.submit}>
                 <FormGroup>
                     <InputGroup>
-                        <FormControl type="text" placeholder="Enter twitter user handle"
+                        <FormControl type="text" placeholder="Start by entering any twitter username here"
                             onChange={(evt) => {
                                 this.setState({user: evt.target.value});
                             }}
