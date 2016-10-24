@@ -13,7 +13,14 @@ import Tweet from '../Tweet.js';
 // Root application component
 class App extends Component {
 
-    static propTypes = {}
+    static propTypes = {
+        // the URL (or subpath) from which the app will retrieve tweets via a simple GET request
+        tweetsServiceURL: React.PropTypes.string
+    }
+
+    static defaultProps = {
+        tweetsServiceURL: '/tweets'
+    }
 
     constructor() {
         super();
@@ -44,7 +51,7 @@ class App extends Component {
 
     fetchTweets(user) {
         this.setState({fetching:true, error:null});
-        fetch("/tweets?u="+encodeURIComponent(user)).then((response) => {
+        fetch(this.props.tweetsServiceURL+"?u="+encodeURIComponent(user)).then((response) => {
             if (!this.state.fetching) return; // we no longer want the data
             this.setState({fetching:false});
             if (response.status >= 200 && response.status < 300) {

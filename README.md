@@ -9,7 +9,7 @@
 - integrate Redux
 - replace this with a proper README!
 
-# Running the app
+# Installing, testing and running the app
 
 Requirements:
 - `npm`
@@ -18,6 +18,7 @@ Requirements:
 From root directory run the following:
 ```
 npm install
+npm test
 npm run server
 ```
 

@@ -1,0 +1,377 @@
+exports[`<App /> renders consistently 1`] = `
+"<App tweetsServiceURL=\"/tweets\">
+  <div className=\"container\">
+    <h2>
+      Twitter browser demo
+    </h2>
+    <SearchBox fetching={false} onSubmit={[Function]} onChange={[Function]} placeholder=\"Search\">
+      <form onSubmit={[Function]}>
+        <FormGroup bsClass=\"form-group\">
+          <div className=\"form-group\">
+            <InputGroup bsClass=\"input-group\">
+              <span className=\"input-group\">
+                <FormControl type=\"text\" placeholder=\"Search\" onChange={[Function]} value=\"\" componentClass=\"input\" bsClass=\"form-control\">
+                  <input placeholder=\"Search\" onChange={[Function]} value=\"\" type=\"text\" id={[undefined]} className=\"form-control\" />
+                </FormControl>
+                <InputGroupButton bsClass=\"input-group-btn\">
+                  <span className=\"input-group-btn\">
+                    <Button onClick={[Function]} bsStyle=\"primary\" disabled={false} active={false} block={false} bsClass=\"btn\">
+                      <button onClick={[Function]} disabled={false} type=\"button\" className=\"btn btn-primary\">
+                        <Glyphicon glyph=\"search\" bsClass=\"glyphicon\">
+                          <span className=\"glyphicon glyphicon-search\" />
+                        </Glyphicon>
+                      </button>
+                    </Button>
+                  </span>
+                </InputGroupButton>
+              </span>
+            </InputGroup>
+          </div>
+        </FormGroup>
+      </form>
+    </SearchBox>
+  </div>
+</App>"
+`;
+
+exports[`<App /> renders consistently 2`] = `
+"<App tweetsServiceURL=\"/tweets\">
+  <div className=\"container\">
+    <h2>
+      Twitter browser demo
+    </h2>
+    <SearchBox fetching={false} onSubmit={[Function]} onChange={[Function]} placeholder=\"Search\">
+      <form onSubmit={[Function]}>
+        <FormGroup bsClass=\"form-group\">
+          <div className=\"form-group\">
+            <InputGroup bsClass=\"input-group\">
+              <span className=\"input-group\">
+                <FormControl type=\"text\" placeholder=\"Search\" onChange={[Function]} value=\"\" componentClass=\"input\" bsClass=\"form-control\">
+                  <input placeholder=\"Search\" onChange={[Function]} value=\"\" type=\"text\" id={[undefined]} className=\"form-control\" />
+                </FormControl>
+                <InputGroupButton bsClass=\"input-group-btn\">
+                  <span className=\"input-group-btn\">
+                    <Button onClick={[Function]} bsStyle=\"primary\" disabled={false} active={false} block={false} bsClass=\"btn\">
+                      <button onClick={[Function]} disabled={false} type=\"button\" className=\"btn btn-primary\">
+                        <Glyphicon glyph=\"search\" bsClass=\"glyphicon\">
+                          <span className=\"glyphicon glyphicon-search\" />
+                        </Glyphicon>
+                      </button>
+                    </Button>
+                  </span>
+                </InputGroupButton>
+              </span>
+            </InputGroup>
+          </div>
+        </FormGroup>
+      </form>
+    </SearchBox>
+    <div>
+      <Panel header=\"Filters\" collapsible={true} defaultExpanded={false} bsStyle=\"default\" bsClass=\"panel\">
+        <div className=\"panel panel-default\" id={{...}}>
+          <div className=\"panel-heading\">
+            <h4 role=\"presentation\" className=\"panel-title\">
+              <a role={[undefined]} href={[undefined]} onClick={[Function]} aria-controls={[undefined]} aria-expanded={false} aria-selected={false}>
+                Filters
+              </a>
+            </h4>
+          </div>
+          <Collapse in={false} onEnter={[undefined]} onEntering={[undefined]} onEntered={[undefined]} onExit={[undefined]} onExiting={[undefined]} onExited={[undefined]} timeout={300} unmountOnExit={false} transitionAppear={false} dimension=\"height\" getDimensionValue={[Function]}>
+            <Transition in={false} onExited={[Function]} timeout={300} unmountOnExit={false} transitionAppear={false} aria-expanded={{...}} className=\"\" exitedClassName=\"collapse\" exitingClassName=\"collapsing\" enteredClassName=\"collapse in\" enteringClassName=\"collapsing\" onEnter={[Function]} onEntering={[Function]} onEntered={[Function]} onExit={[Function]} onExiting={[Function]}>
+              <div id={[undefined]} role={[undefined]} className=\"panel-collapse collapse\" aria-hidden={true} aria-expanded={{...}}>
+                <div className=\"panel-body\">
+                  <Form horizontal={true} bsSize=\"small\" inline={false} componentClass=\"form\" bsClass=\"form\">
+                    <form className=\"form-horizontal\">
+                      <FilterEditor label=\"Sent date\" value={[undefined]} placeholder=\"Enter date\" onChange={[Function]}>
+                        <FormGroup bsSize=\"small\" bsClass=\"form-group\">
+                          <div className=\"form-group form-group-sm\">
+                            <Col sm={3} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-3\">
+                                <ControlLabel srOnly={false} bsClass=\"control-label\">
+                                  <label htmlFor={[undefined]} className=\"control-label\">
+                                    Sent date
+                                  </label>
+                                </ControlLabel>
+                              </div>
+                            </Col>
+                            <Col sm={9} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-9\">
+                                <FormControl type=\"text\" placeholder=\"Enter date\" onChange={[Function]} componentClass=\"input\" bsClass=\"form-control\">
+                                  <input placeholder=\"Enter date\" onChange={[Function]} type=\"text\" id={[undefined]} className=\"form-control\" />
+                                </FormControl>
+                              </div>
+                            </Col>
+                          </div>
+                        </FormGroup>
+                      </FilterEditor>
+                      <FilterEditor label=\"Contains\" value={[undefined]} placeholder=\"Enter text\" onChange={[Function]}>
+                        <FormGroup bsSize=\"small\" bsClass=\"form-group\">
+                          <div className=\"form-group form-group-sm\">
+                            <Col sm={3} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-3\">
+                                <ControlLabel srOnly={false} bsClass=\"control-label\">
+                                  <label htmlFor={[undefined]} className=\"control-label\">
+                                    Contains
+                                  </label>
+                                </ControlLabel>
+                              </div>
+                            </Col>
+                            <Col sm={9} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-9\">
+                                <FormControl type=\"text\" placeholder=\"Enter text\" onChange={[Function]} componentClass=\"input\" bsClass=\"form-control\">
+                                  <input placeholder=\"Enter text\" onChange={[Function]} type=\"text\" id={[undefined]} className=\"form-control\" />
+                                </FormControl>
+                              </div>
+                            </Col>
+                          </div>
+                        </FormGroup>
+                      </FilterEditor>
+                      <FilterEditor label=\"Length\" value={[undefined]} placeholder=\"Enter minimal length of tweets\" onChange={[Function]}>
+                        <FormGroup bsSize=\"small\" bsClass=\"form-group\">
+                          <div className=\"form-group form-group-sm\">
+                            <Col sm={3} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-3\">
+                                <ControlLabel srOnly={false} bsClass=\"control-label\">
+                                  <label htmlFor={[undefined]} className=\"control-label\">
+                                    Length
+                                  </label>
+                                </ControlLabel>
+                              </div>
+                            </Col>
+                            <Col sm={9} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-9\">
+                                <FormControl type=\"text\" placeholder=\"Enter minimal length of tweets\" onChange={[Function]} componentClass=\"input\" bsClass=\"form-control\">
+                                  <input placeholder=\"Enter minimal length of tweets\" onChange={[Function]} type=\"text\" id={[undefined]} className=\"form-control\" />
+                                </FormControl>
+                              </div>
+                            </Col>
+                          </div>
+                        </FormGroup>
+                      </FilterEditor>
+                      <FilterEditor label=\"Num. of @mentions\" value={[undefined]} placeholder=\"Enter minimal number of @mentions in tweet\" onChange={[Function]}>
+                        <FormGroup bsSize=\"small\" bsClass=\"form-group\">
+                          <div className=\"form-group form-group-sm\">
+                            <Col sm={3} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-3\">
+                                <ControlLabel srOnly={false} bsClass=\"control-label\">
+                                  <label htmlFor={[undefined]} className=\"control-label\">
+                                    Num. of @mentions
+                                  </label>
+                                </ControlLabel>
+                              </div>
+                            </Col>
+                            <Col sm={9} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-9\">
+                                <FormControl type=\"text\" placeholder=\"Enter minimal number of @mentions in tweet\" onChange={[Function]} componentClass=\"input\" bsClass=\"form-control\">
+                                  <input placeholder=\"Enter minimal number of @mentions in tweet\" onChange={[Function]} type=\"text\" id={[undefined]} className=\"form-control\" />
+                                </FormControl>
+                              </div>
+                            </Col>
+                          </div>
+                        </FormGroup>
+                      </FilterEditor>
+                      <FilterEditor label=\"Num. of #hastags\" value={[undefined]} placeholder=\"Enter minimal number of #hashtags in tweet\" onChange={[Function]}>
+                        <FormGroup bsSize=\"small\" bsClass=\"form-group\">
+                          <div className=\"form-group form-group-sm\">
+                            <Col sm={3} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-3\">
+                                <ControlLabel srOnly={false} bsClass=\"control-label\">
+                                  <label htmlFor={[undefined]} className=\"control-label\">
+                                    Num. of #hastags
+                                  </label>
+                                </ControlLabel>
+                              </div>
+                            </Col>
+                            <Col sm={9} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-9\">
+                                <FormControl type=\"text\" placeholder=\"Enter minimal number of #hashtags in tweet\" onChange={[Function]} componentClass=\"input\" bsClass=\"form-control\">
+                                  <input placeholder=\"Enter minimal number of #hashtags in tweet\" onChange={[Function]} type=\"text\" id={[undefined]} className=\"form-control\" />
+                                </FormControl>
+                              </div>
+                            </Col>
+                          </div>
+                        </FormGroup>
+                      </FilterEditor>
+                      <FilterEditor label=\"Num. of likes\" value={[undefined]} placeholder=\"Enter minimal number of likes\" onChange={[Function]}>
+                        <FormGroup bsSize=\"small\" bsClass=\"form-group\">
+                          <div className=\"form-group form-group-sm\">
+                            <Col sm={3} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-3\">
+                                <ControlLabel srOnly={false} bsClass=\"control-label\">
+                                  <label htmlFor={[undefined]} className=\"control-label\">
+                                    Num. of likes
+                                  </label>
+                                </ControlLabel>
+                              </div>
+                            </Col>
+                            <Col sm={9} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-9\">
+                                <FormControl type=\"text\" placeholder=\"Enter minimal number of likes\" onChange={[Function]} componentClass=\"input\" bsClass=\"form-control\">
+                                  <input placeholder=\"Enter minimal number of likes\" onChange={[Function]} type=\"text\" id={[undefined]} className=\"form-control\" />
+                                </FormControl>
+                              </div>
+                            </Col>
+                          </div>
+                        </FormGroup>
+                      </FilterEditor>
+                      <FilterEditor label=\"Contains #hashtag\" value={[undefined]} placeholder=\"Enter specific @hashtag\" onChange={[Function]}>
+                        <FormGroup bsSize=\"small\" bsClass=\"form-group\">
+                          <div className=\"form-group form-group-sm\">
+                            <Col sm={3} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-3\">
+                                <ControlLabel srOnly={false} bsClass=\"control-label\">
+                                  <label htmlFor={[undefined]} className=\"control-label\">
+                                    Contains #hashtag
+                                  </label>
+                                </ControlLabel>
+                              </div>
+                            </Col>
+                            <Col sm={9} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-9\">
+                                <FormControl type=\"text\" placeholder=\"Enter specific @hashtag\" onChange={[Function]} componentClass=\"input\" bsClass=\"form-control\">
+                                  <input placeholder=\"Enter specific @hashtag\" onChange={[Function]} type=\"text\" id={[undefined]} className=\"form-control\" />
+                                </FormControl>
+                              </div>
+                            </Col>
+                          </div>
+                        </FormGroup>
+                      </FilterEditor>
+                      <FilterEditor label=\"Contains @mention\" value={[undefined]} placeholder=\"Enter specific @mention\" onChange={[Function]}>
+                        <FormGroup bsSize=\"small\" bsClass=\"form-group\">
+                          <div className=\"form-group form-group-sm\">
+                            <Col sm={3} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-3\">
+                                <ControlLabel srOnly={false} bsClass=\"control-label\">
+                                  <label htmlFor={[undefined]} className=\"control-label\">
+                                    Contains @mention
+                                  </label>
+                                </ControlLabel>
+                              </div>
+                            </Col>
+                            <Col sm={9} componentClass=\"div\" bsClass=\"col\">
+                              <div className=\"col-sm-9\">
+                                <FormControl type=\"text\" placeholder=\"Enter specific @mention\" onChange={[Function]} componentClass=\"input\" bsClass=\"form-control\">
+                                  <input placeholder=\"Enter specific @mention\" onChange={[Function]} type=\"text\" id={[undefined]} className=\"form-control\" />
+                                </FormControl>
+                              </div>
+                            </Col>
+                          </div>
+                        </FormGroup>
+                      </FilterEditor>
+                    </form>
+                  </Form>
+                </div>
+              </div>
+            </Transition>
+          </Collapse>
+        </div>
+      </Panel>
+      <a href=\"#\" onClick={[Function]}>
+        Show statistics
+      </a>
+      <TweetsTable tweets={{...}}>
+        <Table striped={true} bordered={true} condensed={true} hover={true} responsive={false} bsClass=\"table\">
+          <table className=\"table table-striped table-bordered table-condensed table-hover\">
+            <thead>
+              <tr>
+                <th className=\"clickable no-wrap\" onClick={[Function]}>
+                  <Glyphicon glyph=\"chevron-up\" bsClass=\"glyphicon\">
+                    <span className=\"glyphicon glyphicon-chevron-up\" />
+                  </Glyphicon>
+                  #
+                </th>
+                <th className=\"clickable no-wrap\" onClick={[Function]}>
+                  text
+                </th>
+                <th className=\"clickable no-wrap\" onClick={[Function]}>
+                  <Glyphicon glyph=\"star\" bsClass=\"glyphicon\">
+                    <span className=\"glyphicon glyphicon-star\" />
+                  </Glyphicon>
+                </th>
+                <th className=\"clickable no-wrap\" onClick={[Function]}>
+                  sent
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  0
+                </td>
+                <td>
+                  First tweet of the day
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1.1.2016 8:00
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  1
+                </td>
+                <td>
+                  Tweet with one @mention
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1.1.2016 9:00
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  2
+                </td>
+                <td>
+                  Tweet with a lot of likes #popular
+                </td>
+                <td>
+                  112
+                </td>
+                <td>
+                  1.1.2016 9:30
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  3
+                </td>
+                <td>
+                  @thatOneGuy @thatOtherGuy @thatOneToo whats up
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1.1.2016 10:00
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  4
+                </td>
+                <td>
+                  The edgiest of tweets #sobrave #verytrendy #needsmorehashtags 
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1.1.2016 10:00
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Table>
+      </TweetsTable>
+      <Modal show={false} onHide={[Function]} backdrop={true} keyboard={true} autoFocus={true} enforceFocus={true} manager={{...}} renderBackdrop={[Function]} animation={true} dialogComponentClass={[Function]} bsClass=\"modal\">
+        <Modal onHide={[Function]} keyboard={true} autoFocus={true} enforceFocus={true} manager={{...}} renderBackdrop={[Function]} show={false} onEntering={[Function]} onExited={[Function]} backdrop={true} backdropClassName=\"modal-backdrop\" containerClassName=\"modal-open\" transition={[Function]} dialogTransitionTimeout={300} backdropTransitionTimeout={150} />
+      </Modal>
+    </div>
+  </div>
+</App>"
+`;
