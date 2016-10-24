@@ -1,5 +1,4 @@
 import assert from 'assert';
-import globals from './globals';
 
 class Filter {
     constructor(label, prompt, field, filterFunc) {
@@ -36,10 +35,6 @@ function listContains(list, filterBy) {
     return list.some(item => item === filterBy);
 }
 
-function dateContains(date, filterBy) {
-    return date.format(globals.DATE_FORMAT).includes(filterBy);
-}
-
 function minLength(obj, filterBy) {
     return obj.length >= parseInt(filterBy,10);
 }
@@ -50,7 +45,7 @@ function minValue(value, filterBy) {
 }
 
 export default {
-    date: new Filter('Sent date','date','date',dateContains),
+    date: new Filter('Sent date','date','dateString',textContains),
     fullText: new Filter('Contains','text','text',textContains),
     tweetLength: new Filter('Length','minimal length of tweets','text', minLength),
     favourites: new Filter('Num. of likes','minimal number of likes','favs', minValue),

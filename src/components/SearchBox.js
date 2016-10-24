@@ -1,19 +1,35 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, InputGroup, FormControl, Glyphicon } from 'react-bootstrap'
 
+// General purpose search box
 class SearchBox extends Component {
+
+    static propTypes = {
+        // placeholder value in the search field
+        placeholder: React.PropTypes.string,
+        // args:(event) called whenever search value changes
+        onChange: React.PropTypes.func,
+        // args:() called whenever the search is submitted by user (hitting Enter or clicking the search button)
+        onSubmit: React.PropTypes.func
+    }
+
+    static defaultProps = {
+        placeholder: 'Search',
+        onChange: ()=>{},
+        onSubmit: ()=>{}
+    }    
+
     constructor() {
         super();
         this.state = {
-            btnClicked : false,
-            user : '',
+            searchString : '',
         }
     }
 
     submit = (event) => {
         if (event) event.preventDefault();
-        if (!this.state.user) return;
-        this.props.onSubmit(this.state.user);
+        if (!this.state.searchString) return;
+        this.props.onSubmit(this.state.searchString);
     }
 
     render() {
@@ -21,12 +37,12 @@ class SearchBox extends Component {
             <form onSubmit={this.submit}>
                 <FormGroup>
                     <InputGroup>
-                        <FormControl type="text" placeholder="Start by entering a twitter username"
+                        <FormControl type="text" placeholder={this.props.placeholder}
                             onChange={(evt) => {
-                                this.setState({user: evt.target.value});
+                                this.setState({searchString: evt.target.value});
                                 this.props.onChange(evt);
                             }}
-                            value={this.state.user}>                             
+                            value={this.state.searchString}>                             
                         </FormControl>
                         <InputGroup.Button>
                             <Button onClick={this.submit} bsStyle='primary' disabled={this.props.fetching}>

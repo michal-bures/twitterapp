@@ -2,9 +2,18 @@ import 'whatwg-fetch';
 import React, { Component } from 'react';
 import { Table, Glyphicon } from 'react-bootstrap';
 import assert from 'assert';
-import globals from '../globals.js';
+import Immutable from 'immutable';
 
+// Sortable table of Tweets
 class TweetsTable extends Component {
+    
+    static propTypes = {
+        // list of Tweets - must contain Tweet objects (see Tweet.js)
+        tweets : React.PropTypes.instanceOf(Immutable.List).isRequired,
+    }
+
+    static defaultProps = {}
+
     constructor() {
         super();
         this.state = {
@@ -48,7 +57,7 @@ class TweetsTable extends Component {
                         <td>{tweet.id}</td>
                         <td>{tweet.text}</td>
                         <td>{tweet.favs}</td>
-                        <td>{tweet.date.format(globals.DATE_FORMAT)}</td>
+                        <td>{tweet.dateString}</td>
                     </tr>
                 )                            
             })

@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
+import Immutable from 'immutable';
 
+// Displays statistic about a list of tweets
 class Stats extends Component {
+    static propTypes = {
+        // list of Tweets - must contain list of Tweet objects (see Tweet.js)
+        tweets : React.PropTypes.instanceOf(Immutable.List).isRequired,
+    }
+
     render() {
         const tweets = this.props.tweets;
 
