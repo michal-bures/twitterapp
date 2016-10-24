@@ -95,16 +95,6 @@ class App extends Component {
         this.setState({tweets: null, error: null })
     }
 
-    // toggle table ordering by the specified field
-    toggleSort(field) {
-        assert.equal(typeof field,"string");
-        if (this.state.orderBy === field) {
-            this.setState({ ascending : !this.state.ascending });
-        } else {
-            this.setState({ orderBy : field, ascending: true });
-        }
-    }
-
     render() {
 
         const renderResults=() => {
@@ -123,10 +113,8 @@ class App extends Component {
                 return;
             } else {
                 // display results
-                // apply filters and sorting to the tweet list
-                var displayList = this.state.tweets
-                    // apply filters
-                    .filter((item) => {
+                // apply filters the tweet list
+                var displayList = this.state.tweets.filter((item) => {
                         // ok only if all filters match
                         return this.filters.every((filter, i) => {
                             if (!filter.apply(item, this.state.filterValues.get(i))) {
@@ -135,14 +123,7 @@ class App extends Component {
                             return true;
                         });
                     })
-                    // apply sorting
-                    .sort((a,b) => {
-                        const va = a[this.state.orderBy];
-                        const vb = b[this.state.orderBy];
-                        if (va === vb) return 0;
-                        if (va > vb) return 1 * (this.state.ascending?1:-1);
-                        return -1 * (this.state.ascending?1:-1);
-                })
+                
 
                 return (
                     <div>
@@ -174,7 +155,8 @@ class App extends Component {
                         </Modal.Body>
                     </Modal> 
                     </div>               
-                );            }
+                );            
+            }
 
         }
 
