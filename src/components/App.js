@@ -15,11 +15,23 @@ class App extends Component {
 
     static propTypes = {
         // the URL (or subpath) from which the app will retrieve tweets via a simple GET request
-        tweetsServiceURL: React.PropTypes.string
+        tweetsServiceURL: React.PropTypes.string,
+        // sequence of available Filters (see filters.js)
+        filters: React.PropTypes.instanceOf(Immutable.List)
     }
 
     static defaultProps = {
-        tweetsServiceURL: '/tweets'
+        tweetsServiceURL: '/tweets',
+        filters: Immutable.List.of(
+            filters.date,
+            filters.fullText,
+            filters.tweetLength,
+            filters.mentions,
+            filters.hashtags,
+            filters.favourites,
+            filters.hashtag,
+            filters.mention
+        )
     }
 
     constructor() {
@@ -29,24 +41,13 @@ class App extends Component {
             tweets : null,
             // whether the client is currently waiting for results to be fetched from server
             fetching : false,
-            // active filter values (key is index of filter in this.filters)
+            // active filter values (key is index of filter in this.props.filters)
             filterValues : Immutable.Map(),
             // whether the statistics modal window is currently displayed
             showStats : false,
             // currently displayed error message
             error: null,
         }
-        // listing of displayed filters
-        this.filters = [
-            filters.date,
-            filters.fullText,
-            filters.tweetLength,
-            filters.mentions,
-            filters.hashtags,
-            filters.favourites,
-            filters.hashtag,
-            filters.mention
-        ];
     }
 
     fetchTweets(user) {
@@ -118,7 +119,7 @@ class App extends Component {
                 // apply filters the tweet list
                 var displayList = this.state.tweets.filter((item) => {
                         // ok only if all filters match
-                        return this.filters.every((filter, i) => {
+                        return this.props.filters.every((filter, i) => {
                             if (!filter.apply(item, this.state.filterValues.get(i))) {
                                 return false;
                             }
@@ -134,7 +135,7 @@ class App extends Component {
                         collapsible
                     >
                         <Form horizontal bsSize="small">
-                        {this.filters.map((filter, key) => { return (
+                        {this.props.filters.map((filter, key) => { return (
                             <FilterEditor key={key}
                                 label={filter.label}
                                 value={this.state.filterValues.get(key)}
@@ -153,7 +154,7 @@ class App extends Component {
                             {id:"id", label:"#"},
                             {id:"text", label:"text"},
                             {id:"favs", label:<Glyphicon glyph="star"/>},
-                            {id:"dateString", label:"sent"}
+                            {id:"date", label:"sent", display:"dateString"}
                         )}
                         records={displayList}/>
                     <Modal show={this.state.showStats} onHide={this.hideStats.bind(this)}>

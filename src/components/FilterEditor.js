@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormGroup, ControlLabel, Col, FormControl , Tooltip} from 'react-bootstrap';
 import assert from 'assert';
 
-// General purpose filter value editor
+// Filter value editor
 class FilterEditor extends Component {
 
     static propTypes = {
@@ -62,6 +62,7 @@ class FilterEditor extends Component {
                     type="text"
                     value={this.state.actualValue}
                     placeholder={this.props.placeholder}
+                    className='filter-editor-field'
                     onChange={(event) => { 
                         this.setVal(event.target.value);
                     }}

@@ -1,6 +1,19 @@
 import assert from 'assert';
 
+/**
+ * Each instance of Filter represents a specific filter type on a class of objects, such as 'Filter tweets by minimum length'
+ *
+ * Use the Filter.apply() method to test if the filter succeeds on a specific object. The method takes a filter value as an
+ * additional argument (for example you have to specify the desired min. length when using the 'Filter tweets by minimum length' filter)
+ *
+ * Use the Filter.validateValue() method to test if a given value can be used as a filter value by this filter.
+ */
 class Filter {
+    // Constructor params: 
+    // - label: display label
+    // - prompt: inputbox placeholder text
+    // - filterFunc(propertyValue, filterValue): filter function - should return true if filterValue matches propertyValue
+    // - validatorFunc(value) [optional]: filter value validation function - should return error message or null when value is valid
     constructor(label, prompt, field, filterFunc, validatorFunc) {
         this._label = label;
         this._field = field;
@@ -16,12 +29,15 @@ class Filter {
         return (value === '' ? null : value);
     }
 
-    // apply filter value to a given item, return true if the item matches the current filter value
-    apply(item, value) {
+    // test if the given object (obj) passes this filter given a specific filter value 
+    // - returns true if the item matches the specified filter value
+    // - returns true if the filter value is empty or undefined
+    // - returns false otherwise
+    apply(obj, value) {
         value = this._sanitize(value);
         // if no filter value is specified, consider it a match
         if (value === null) return true;
-        return this._filterFunc(item[this._field], value);
+        return this._filterFunc(obj[this._field], value);
     }
 
     // tests if the filter value is valid
@@ -93,5 +109,5 @@ export default {
     mentions: new Filter('Num. of @mentions','minimal number of @mentions in tweet','mentions', minLength, naturalNumbers),
     hashtags: new Filter('Num. of #hastags','minimal number of #hashtags in tweet','hashtags', minLength, naturalNumbers),
     mention: new Filter('Contains @mention','specific @mention','mentions', matchMention, isSingleToken),
-    hashtag: new Filter('Contains #hashtag','specific @hashtag','hashtags', matchHashtag, isSingleToken)
+    hashtag: new Filter('Contains #hashtag','specific @hashtag','hashtags', matchHashtag, isSingleToken),
 };

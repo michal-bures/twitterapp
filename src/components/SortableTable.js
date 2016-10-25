@@ -4,13 +4,14 @@ import { Table, Glyphicon } from 'react-bootstrap';
 import assert from 'assert';
 import Immutable from 'immutable';
 
-// Sortable table
+// Genral purpose sortable table
 class SortableTable extends Component {
     
     static propTypes = {
         // List of table columns, each column expected to have following properties:
-        // - id ... the property name in records list that should be used to display data in this column
+        // - id ... the record property name that is used for displaying and sorting values in this column
         // - label ... column header content
+        // - display (optional) ... if specified, uses this property for final display instead of id
         columns : React.PropTypes.instanceOf(Immutable.List).isRequired,
         // List of records to be displayed
         records : React.PropTypes.instanceOf(Immutable.List).isRequired,
@@ -54,10 +55,10 @@ class SortableTable extends Component {
             if (orderedList.size === 0) {
                 return <tr><td colSpan={self.props.columns.size}>No items match the selected filters!</td></tr>
             } else {
-                return orderedList.map((rec)=> {
+                return orderedList.map((rec,i)=> {
                     return (
-                    <tr key={rec.id}>
-                        {self.props.columns.map( col => <td key={col.id}>{rec[col.id]}</td>)}
+                    <tr key={i} className={'sortable-table-row-'+i}>
+                        {self.props.columns.map( (col,j) => <td key={j}>{rec[col.display || col.id]}</td>)}
                     </tr>
                     )                            
                 });
