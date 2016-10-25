@@ -32,8 +32,6 @@ describe('<App />', () => {
     );
 
     it('renders consistently', () => {
-        //const app = renderer.create(<App />);
-        //expect(app.toJSON()).toMatchSnapshot();
 
         const wrapper = mount(<App />);
 

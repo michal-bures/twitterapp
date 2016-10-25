@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Modal, Panel, Form } from 'react-bootstrap';
+import { Alert, Modal, Panel, Form, Glyphicon } from 'react-bootstrap';
 import 'whatwg-fetch';
 
 import Immutable from 'immutable';
@@ -7,7 +7,7 @@ import SearchBox from './SearchBox.js';
 import filters from '../filters.js';
 import FilterEditor from './FilterEditor.js';
 import Stats from './Stats.js';
-import TweetsTable from './TweetsTable.js';
+import SortableTable from './SortableTable.js';
 import Tweet from '../Tweet.js';
 
 // Root application component
@@ -36,7 +36,7 @@ class App extends Component {
             // currently displayed error message
             error: null,
         }
-        // listing of available filters
+        // listing of displayed filters
         this.filters = [
             filters.date,
             filters.fullText,
@@ -142,12 +142,20 @@ class App extends Component {
                                 onChange={(value) => {
                                     this.setState({filterValues : this.state.filterValues.set(key, value)});
                                 }}
+                                validator={filter.validateValue.bind(filter)}
                             />
                         )})}
                         </Form>
                     </Panel>
                     <a href="#" onClick={this.showStats.bind(this)}>Show statistics</a>
-                    <TweetsTable tweets={displayList}/>
+                    <SortableTable 
+                        columns={Immutable.List.of(
+                            {id:"id", label:"#"},
+                            {id:"text", label:"text"},
+                            {id:"favs", label:<Glyphicon glyph="star"/>},
+                            {id:"dateString", label:"sent"}
+                        )}
+                        records={displayList}/>
                     <Modal show={this.state.showStats} onHide={this.hideStats.bind(this)}>
                         <Modal.Header closeButton>
                             <Modal.Title>Statistics</Modal.Title>

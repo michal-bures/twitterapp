@@ -1,17 +1,36 @@
 import assert from 'assert';
 
 class Filter {
-    constructor(label, prompt, field, filterFunc) {
+    constructor(label, prompt, field, filterFunc, validatorFunc) {
         this._label = label;
         this._field = field;
         this._filterFunc = filterFunc;
+        this._validatorFunc = validatorFunc || (()=>{ return null; });
         this._prompt = 'Enter '+(prompt || 'text');
     }
 
+    // returns the trimmed value, returns null if the value is undefined or empty string
+    _sanitize(value) {
+        if (value === undefined) return null;
+        value = value.toString().trim();
+        return (value === '' ? null : value);
+    }
+
+    // apply filter value to a given item, return true if the item matches the current filter value
     apply(item, value) {
-        // if no filter value is specified, filter always matches
-        if (value === undefined || value === '') return true;
+        value = this._sanitize(value);
+        // if no filter value is specified, consider it a match
+        if (value === null) return true;
         return this._filterFunc(item[this._field], value);
+    }
+
+    // tests if the filter value is valid
+    // returns error message if the value is invalid, null otherwise
+    validateValue(value) {
+        value = this._sanitize(value);
+        // empty filter value is always valid
+        if (value === null) return null;
+        return this._validatorFunc(value);
     }
 
     get label() {
@@ -31,8 +50,11 @@ function textContains(text, filterBy) {
     return text.toLowerCase().includes(filterBy.toLowerCase());
 }
 
-function listContains(list, filterBy) {
-    return list.some(item => item === filterBy);
+function matchHashtag(list, filterBy) {
+    return list.some(item => item === filterBy || '#'+item === filterBy);
+}
+function matchMention(list, filterBy) {
+    return list.some(item => item === filterBy || '@'+item === filterBy);
 }
 
 function minLength(obj, filterBy) {
@@ -44,13 +66,32 @@ function minValue(value, filterBy) {
     return parseInt(value,10) >= parseInt(filterBy,10);
 }
 
+// Filter value validator functions
+
+function naturalNumbers(val) {
+    var n = Number(val);
+    if (isNaN(n)) {
+        return "Number expected!";
+    } else if (n < 0) {
+        return "No negative numbers please!";
+    }
+    return null;
+}
+
+function isSingleToken(val) {
+    if (val.includes(' ')) {
+        return "One word at a time please!";
+    }
+    return null;
+}
+
 export default {
     date: new Filter('Sent date','date','dateString',textContains),
     fullText: new Filter('Contains','text','text',textContains),
-    tweetLength: new Filter('Length','minimal length of tweets','text', minLength),
-    favourites: new Filter('Num. of likes','minimal number of likes','favs', minValue),
-    mentions: new Filter('Num. of @mentions','minimal number of @mentions in tweet','mentions', minLength),
-    hashtags: new Filter('Num. of #hastags','minimal number of #hashtags in tweet','hashtags', minLength),
-    mention: new Filter('Contains @mention','specific @mention','mentions', listContains),
-    hashtag: new Filter('Contains #hashtag','specific @hashtag','hashtags', listContains)
+    tweetLength: new Filter('Length','minimal length of tweets','text', minLength, naturalNumbers),
+    favourites: new Filter('Num. of likes','minimal number of likes','favs', minValue, naturalNumbers),
+    mentions: new Filter('Num. of @mentions','minimal number of @mentions in tweet','mentions', minLength, naturalNumbers),
+    hashtags: new Filter('Num. of #hastags','minimal number of #hashtags in tweet','hashtags', minLength, naturalNumbers),
+    mention: new Filter('Contains @mention','specific @mention','mentions', matchMention, isSingleToken),
+    hashtag: new Filter('Contains #hashtag','specific @hashtag','hashtags', matchHashtag, isSingleToken)
 };

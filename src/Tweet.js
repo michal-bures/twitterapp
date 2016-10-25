@@ -8,23 +8,28 @@ class Tweet {
     // i: internal tweet identifier, tweetData: tweet object retrieved from Twitter API
     constructor(i,tweetData) {
         this._data = {
-            id: i,                                                           // sequential number in results
-            text: tweetData.text,                                                // tweet content
-            favs: Number.parseInt(tweetData.favorite_count, 10),                 // number of likes (favourites)
-            retweets: Number.parseInt(tweetData.retweet_count, 10),              // number of retweets
-            date: moment(tweetData.created_at,'ddd MMM D HH:mm:ss Z'),           // tweet creation date
-            mentions: tweetData.entities.user_mentions.map(m => m.screen_name),  // list of @mentions 
-            hashtags: tweetData.entities.hashtags.map(h => h.text)               // list of #hashtags
+            id: i,                                                           
+            text: tweetData.text,                                                
+            favs: Number.parseInt(tweetData.favorite_count, 10),                
+            date: moment(tweetData.created_at,'ddd MMM D HH:mm:ss Z'),           
+            mentions: tweetData.entities.user_mentions.map(m => m.screen_name),  
+            hashtags: tweetData.entities.hashtags.map(h => h.text)               
         }
     }
 
+    // sequential number in results
     get id() { return this._data.id; }
+    // tweet content
     get text() { return this._data.text; }
+    // number of likes (favourites)
     get favs() { return this._data.favs; }
-    get retweets() { return this._data.retweets; }
+    // tweet creation date
     get date() { return this._data.date; }
+    // tweet creaqtion date as formated string
     get dateString() { return this._data.date.format(DATE_FORMAT); }
+    // list of @mentions 
     get mentions() { return this._data.mentions; }
+    // list of #hashtags
     get hashtags() { return this._data.hashtags; }
 }
 
