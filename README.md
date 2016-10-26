@@ -7,6 +7,7 @@ Requirements:
 From root directory run the following:
 ```
 npm install
+npm build
 npm test
 npm run server
 ```
