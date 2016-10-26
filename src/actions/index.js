@@ -1,12 +1,13 @@
-import filters from '../filters';
-import Immutable from 'immutable';
 import 'whatwg-fetch';
-import Tweet from '../Tweet.js';
 
 export const FETCH_TWEETS_REQUEST = 'FETCH_TWEETS_REQUEST';
-export const FETCH_TWEETS_RESPONSE = 'FETCH_TWEEETS_FINISHED';
+export const FETCH_TWEETS_RESPONSE = 'FETCH_TWEEETS_RESPONSE';
 export const FETCH_TWEETS_ERROR = 'FETCH_TWEEETS_ERROR';
 export const PURGE_TWEETS = 'PURGE_TWEETS';
+export const SHOW_STATS = 'SHOW_STATS';
+export const HIDE_STATS = 'HIDE_STATS';
+export const SET_FILTER = 'SET_FILTER';
+
 
 export const startFetching = (user) => {
     return {
@@ -50,8 +51,28 @@ export const fetchTweets = (user) => {
     }
 }
 
+export const showStats = () => {
+    return {
+        type: SHOW_STATS
+    }
+}
+
+export const hideStats = () => {
+    return {
+        type: HIDE_STATS
+    }
+}
+
 export const purgeTweets = () => {
     return {
-        type: PURGE_TWEETS,
+        type: PURGE_TWEETS
+    }
+}
+
+export const setFilter = (index, value) => {
+    return {
+        type: SET_FILTER,
+        index: index,
+        value: value
     }
 }

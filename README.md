@@ -1,9 +1,5 @@
 # TODO list
 
-- better filter editors (form validation!)
-- better UX
-- fix any remaining TODOs in code
-- Unit tests!
 - check for deprecated (ES<6) syntax
 - simplify arrow functions where possible
 - integrate Redux
@@ -26,7 +22,7 @@ Application will be served on http://localhost:3001
 
 ### Development mode:
 In addition to the standard server, you can start a development server (with live reloading support etc.) on `http://localhost:3000` via `npm start`.
-The main node server still needs to be running since it serves as a proxy for negotiating authentication with Twitter API.
+The main node server still needs to be running since it serves as a proxy for negotiating authentication with Twitter API (and avoiding CORS issues).
 
 
 # Notes on implementation
