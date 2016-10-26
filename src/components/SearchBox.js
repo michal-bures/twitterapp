@@ -56,8 +56,8 @@ SearchBox.propTypes = {
 const mapStateToProps = (state) => {
   return {
     placeholder: "Start by entering username",
-    fetching: state.fetching,
-    error: state.error,
+    fetching: state.get("fetching"),
+    error: state.get("error"),
   }
 }
 
