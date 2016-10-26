@@ -1,6 +1,6 @@
 import moment from "moment";
 
-const DATE_FORMAT = 'D.M.YYYY HH:mm';
+const DATE_FORMAT = "D.M.YYYY HH:mm";
 
 // Immutable representation of a single tweet
 class Tweet {
@@ -11,7 +11,7 @@ class Tweet {
             id: i,                                                           
             text: tweetData.text,                                                
             favs: Number.parseInt(tweetData.favorite_count, 10),                
-            date: moment(tweetData.created_at,'ddd MMM D HH:mm:ss Z'),           
+            date: moment(tweetData.created_at,"ddd MMM D HH:mm:ss Z"),           
             mentions: tweetData.entities.user_mentions.map(m => m.screen_name),  
             hashtags: tweetData.entities.hashtags.map(h => h.text)               
         }
