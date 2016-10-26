@@ -11,7 +11,7 @@ npm test
 npm run server
 ```
 
-Application will be served on http://localhost:3001
+Application will be served on `http://localhost:3001`
 
 ### Development mode:
 
