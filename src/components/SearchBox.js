@@ -1,61 +1,79 @@
-import React, { Component } from 'react';
-import { Button, FormGroup, InputGroup, FormControl, Glyphicon } from 'react-bootstrap'
+import React from 'react';
+import { Alert, Button, FormGroup, InputGroup, FormControl, Glyphicon } from 'react-bootstrap'
+import { connect } from 'react-redux';
+import { fetchTweets, purgeTweets } from '../actions';
+
 
 // General purpose search box
-class SearchBox extends Component {
+let SearchBox = ({dispatch, placeholder, onChange, onSubmit, fetching, error}) => {
 
-    static propTypes = {
-        // placeholder value in the search field
-        placeholder: React.PropTypes.string,
-        // args:(event) called whenever search value changes
-        onChange: React.PropTypes.func,
-        // args:() called whenever the search is submitted by user (hitting Enter or clicking the search button)
-        onSubmit: React.PropTypes.func
-    }
+    let currentInput;
 
-    static defaultProps = {
-        placeholder: 'Search',
-        onChange: ()=>{},
-        onSubmit: ()=>{}
-    }    
-
-    constructor() {
-        super();
-        this.state = {
-            searchString : '',
-        }
-    }
-
-    submit = (event) => {
-        if (event) event.preventDefault();
-        if (!this.state.searchString) return;
-        this.props.onSubmit(this.state.searchString);
-    }
-
-    render() {
-        return (
-            <form onSubmit={this.submit}>
+    return (
+            <form onSubmit={ event => {
+                if (event) event.preventDefault();
+                if (!currentInput) return;
+                onSubmit(currentInput);
+            }}>
                 <FormGroup>
                     <InputGroup>
-                        <FormControl type="text" placeholder={this.props.placeholder}
+                        <FormControl type="text" placeholder={placeholder}
                             onChange={(evt) => {
-                                this.setState({searchString: evt.target.value});
-                                this.props.onChange(evt);
-                            }}
-                            value={this.state.searchString}>                             
+                                currentInput = evt.target.value;
+                                onChange(currentInput);
+                            }}>
                         </FormControl>
                         <InputGroup.Button>
-                            <Button onClick={this.submit} bsStyle='primary' disabled={this.props.fetching}>
-                                {(this.props.fetching ? 
+                            <Button onClick={() => onSubmit(currentInput)} type="submit" bsStyle='primary' disabled={fetching}>
+                                {(fetching ? 
                                     <Glyphicon glyph="refresh" className='spinning'/>:
                                     <Glyphicon glyph="search"/>)}</Button>
                         </InputGroup.Button>
                     </InputGroup>
                 </FormGroup>
+                {error && <Alert bsStyle="danger">
+                      <p>{error}</p>
+                    </Alert>}
             </form>
 
-        );
-    }
+    );
+    
 }
+
+SearchBox.propTypes = {
+    // placeholder value in the search field
+    placeholder: React.PropTypes.string,
+    // args:(event) called whenever search value changes
+    onChange: React.PropTypes.func,
+    // args:() called whenever the search is submitted by user (hitting Enter or clicking the search button)
+    onSubmit: React.PropTypes.func,
+
+    error: React.PropTypes.string
+}
+
+
+const mapStateToProps = (state) => {
+  return {
+    placeholder: 'Start by entering username',
+    fetching: state.fetching,
+    error: state.error,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSubmit: (user) => {
+      dispatch(fetchTweets(user));
+    },
+    onChange: () => {
+      dispatch(purgeTweets());
+    }
+  }
+}
+
+SearchBox = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SearchBox);
 
 export default SearchBox;
