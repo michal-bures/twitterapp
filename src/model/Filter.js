@@ -109,5 +109,5 @@ export default {
     mentions: new Filter('Num. of @mentions','minimal number of @mentions in tweet','mentions', minLength, naturalNumbers),
     hashtags: new Filter('Num. of #hastags','minimal number of #hashtags in tweet','hashtags', minLength, naturalNumbers),
     mention: new Filter('Contains @mention','specific @mention','mentions', matchMention, isSingleToken),
-    hashtag: new Filter('Contains #hashtag','specific @hashtag','hashtags', matchHashtag, isSingleToken),
+    hashtag: new Filter('Contains #hashtag','specific #hashtag','hashtags', matchHashtag, isSingleToken),
 };

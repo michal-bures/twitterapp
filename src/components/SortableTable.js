@@ -11,7 +11,7 @@ class SortableTable extends Component {
         // List of table columns, each column expected to have following properties:
         // - id ... the record property name that is used for displaying and sorting values in this column
         // - label ... column header content
-        // - display (optional) ... if specified, uses this property for final display instead of id
+        // - display (optional) ... if specified, uses this record property for final display value instead of the one specified in id
         columns : React.PropTypes.instanceOf(Immutable.List).isRequired,
         // List of records to be displayed
         records : React.PropTypes.instanceOf(Immutable.List).isRequired,

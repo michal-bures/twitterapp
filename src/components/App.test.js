@@ -3,6 +3,10 @@ import App from './App';
 import moment from 'moment';
 import { mount } from 'enzyme';
 import Immutable from 'immutable';
+import twitterApp from '../reducers';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import { startFetching, processResponse } from '../actions'
 
 function mockTweet(id, text, favs, time) {
     let mentions = text.match(/@[^@ ]+/g) || [];
@@ -21,6 +25,7 @@ function mockTweet(id, text, favs, time) {
 describe('<App />', () => {
     
     let i = 0;
+
     const mockTweets = {
         first : mockTweet(i++,'It\'s never too early for some twitter drama!',0,'3:00'),
         oneMention : mockTweet(i++,'Tweet with one @mention',0,'9:00'),
@@ -29,16 +34,30 @@ describe('<App />', () => {
         threeMentions : mockTweet(i++,'@thatOneGuy @thatOtherGuy @thatOneToo I see!',0,'10:00'),
         threeHashtags : mockTweet(i++,'The edgiest of tweets #sobrave #verytrendy #needsmorehashtags ',0,'10:00'),
     }
+    const mockTweetsSequence = Immutable.List.of(
+        mockTweets.first, mockTweets.oneMention, mockTweets.oneHashtag, mockTweets.mostPopular,
+        mockTweets.threeMentions, mockTweets.threeHashtags
+    )
 
     let wApp;
     let wTable;
     
     beforeEach(() => {
-        wApp = mount(<App />);
+        let store = createStore(twitterApp,
+        Immutable.fromJS({
+            fetching : false,
+            tweets : mockTweetsSequence,
+            statsModalVisible : false,
+            error: null,
+            // sequence filter types
+            filters: [],
+            // active filter values (key is index of filter in filters)
+            filterValues : Immutable.Map()})
+        ,);
+
+        wApp = mount(<Provider store={store}><App /></Provider>);
+
         //console.log(Object.values(mockTweets));
-        wApp.setState({
-            tweets: Immutable.List(Object.keys(mockTweets).map(key => mockTweets[key])),
-        });
         wTable = wApp.find('SortableTable');
     })
 

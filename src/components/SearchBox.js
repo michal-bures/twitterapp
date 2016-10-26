@@ -5,7 +5,7 @@ import { fetchTweets, purgeTweets } from '../actions';
 
 
 // General purpose search box
-let SearchBox = ({dispatch, placeholder, onChange, onSubmit, fetching, error}) => {
+let SearchBox = ({placeholder, onChange, onSubmit, fetching, error}) => {
 
     let currentInput;
 
@@ -24,7 +24,7 @@ let SearchBox = ({dispatch, placeholder, onChange, onSubmit, fetching, error}) =
                             }}>
                         </FormControl>
                         <InputGroup.Button>
-                            <Button onClick={() => onSubmit(currentInput)} type="submit" bsStyle='primary' disabled={fetching}>
+                            <Button type="submit" bsStyle='primary' disabled={fetching}>
                                 {(fetching ? 
                                     <Glyphicon glyph="refresh" className='spinning'/>:
                                     <Glyphicon glyph="search"/>)}</Button>
