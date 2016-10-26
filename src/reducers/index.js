@@ -18,6 +18,8 @@ const twitterApp = (state = Immutable.fromJS({
     tweets : null,
     statsModalVisible : false,
     error: null,
+    orderBy: 'id',
+    orderAscending: true,
     // sequence filter types
     filters: Immutable.List.of(
         Filter.date,

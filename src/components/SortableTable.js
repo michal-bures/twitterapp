@@ -1,8 +1,8 @@
-import 'whatwg-fetch';
-import React, { Component } from 'react';
-import { Table, Glyphicon } from 'react-bootstrap';
-import assert from 'assert';
-import Immutable from 'immutable';
+import "whatwg-fetch";
+import React, { Component } from "react";
+import { Table, Glyphicon } from "react-bootstrap";
+import assert from "assert";
+import Immutable from "immutable";
 
 // Genral purpose sortable table
 class SortableTable extends Component {
@@ -23,7 +23,7 @@ class SortableTable extends Component {
         super();
         this.state = {
             // key used for table ordering
-            orderBy : 'id',
+            orderBy : "id",
             // wheter the table is sorted in ascending (true) or descending (false) order 
             ascending : true,
         }
@@ -57,7 +57,7 @@ class SortableTable extends Component {
             } else {
                 return orderedList.map((rec,i)=> {
                     return (
-                    <tr key={i} className={'sortable-table-row-'+i}>
+                    <tr key={i} className={"sortable-table-row-"+i}>
                         {self.props.columns.map( (col,j) => <td key={j}>{rec[col.display || col.id]}</td>)}
                     </tr>
                     )                            
@@ -79,7 +79,7 @@ class SortableTable extends Component {
                     <thead>
                         <tr>{this.props.columns.map( (col,i) =>
                                 <th key={i}
-                                    className='clickable no-wrap'
+                                    className="clickable no-wrap"
                                     onClick={self.toggleSort.bind(self,col.id)}>
                                     {sortIndicator(col)}{col.label}
                                 </th>)}

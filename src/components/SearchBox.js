@@ -1,7 +1,7 @@
-import React from 'react';
-import { Alert, Button, FormGroup, InputGroup, FormControl, Glyphicon } from 'react-bootstrap'
-import { connect } from 'react-redux';
-import { fetchTweets, purgeTweets } from '../actions';
+import React from "react";
+import { Alert, Button, FormGroup, InputGroup, FormControl, Glyphicon } from "react-bootstrap"
+import { connect } from "react-redux";
+import { fetchTweets, purgeTweets } from "../actions";
 
 
 // General purpose search box
@@ -24,9 +24,9 @@ let SearchBox = ({placeholder, onChange, onSubmit, fetching, error}) => {
                             }}>
                         </FormControl>
                         <InputGroup.Button>
-                            <Button type="submit" bsStyle='primary' disabled={fetching}>
+                            <Button type="submit" bsStyle="primary" disabled={fetching}>
                                 {(fetching ? 
-                                    <Glyphicon glyph="refresh" className='spinning'/>:
+                                    <Glyphicon glyph="refresh" className="spinning"/>:
                                     <Glyphicon glyph="search"/>)}</Button>
                         </InputGroup.Button>
                     </InputGroup>
@@ -47,14 +47,15 @@ SearchBox.propTypes = {
     onChange: React.PropTypes.func,
     // args:() called whenever the search is submitted by user (hitting Enter or clicking the search button)
     onSubmit: React.PropTypes.func,
-
+    // error message to be displayed below the search box
     error: React.PropTypes.string
 }
 
+// === State tree mapping ===
 
 const mapStateToProps = (state) => {
   return {
-    placeholder: 'Start by entering username',
+    placeholder: "Start by entering username",
     fetching: state.fetching,
     error: state.error,
   }

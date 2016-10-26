@@ -1,13 +1,13 @@
-import React from 'react';
-import { Modal, Panel, Form, Glyphicon } from 'react-bootstrap';
+import React from "react";
+import { Modal, Panel, Form, Glyphicon } from "react-bootstrap";
+import Immutable from "immutable";
+import { connect } from "react-redux";
 
-import Immutable from 'immutable';
-import SearchBox from './SearchBox';
-import { connect } from 'react-redux';
-import FilterEditor from './FilterEditor';
-import Stats from './Stats';
-import SortableTable from './SortableTable';
-import { showStats, hideStats, setFilter } from '../actions';
+import SearchBox from "./SearchBox";
+import FilterEditor from "./FilterEditor";
+import Stats from "./Stats";
+import SortableTable from "./SortableTable";
+import { showStats, hideStats, setFilter } from "../actions";
 
 // Root application component
 let App = ({
@@ -20,7 +20,6 @@ let App = ({
     onCloseStats,
     onSetFilter,
 }) => {
-
     const renderResults=() => {
         if (!tweets) {
             // currently loading data - show nothing
@@ -99,10 +98,10 @@ App.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    tweets: state.get('tweets'),
-    statsModalVisible : state.get('statsModalVisible'),
-    filters: state.get('filters'),
-    filterValues : state.get('filterValues'),
+    tweets: state.get("tweets"),
+    statsModalVisible : state.get("statsModalVisible"),
+    filters: state.get("filters"),
+    filterValues : state.get("filterValues"),
   }
 }
 

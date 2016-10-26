@@ -6,7 +6,6 @@ import Immutable from 'immutable';
 import twitterApp from '../reducers';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import { startFetching, processResponse } from '../actions'
 
 function mockTweet(id, text, favs, time) {
     let mentions = text.match(/@[^@ ]+/g) || [];
@@ -62,16 +61,9 @@ describe('<App />', () => {
     })
 
     // DOM navigation helpers
-
-    const tableRowsCount = () => {
-        return wTable.find('tr').length - 1 // substract one for headers row
-    }
-    const firstRowText = () => {
-        return wTable.find('.sortable-table-row-0').find('td').at(1).text();
-    }
-    const columnHeader = (i) => {
-        return wTable.find('th').at(i);
-    }
+    const tableRowsCount = () => wTable.find('tr').length - 1; // substract one for headers row
+    const firstRowText = () => wTable.find('.sortable-table-row-0').find('td').at(1).text();
+    const columnHeader = i => { wTable.find('th').at(i) }
 
     // tests
 
