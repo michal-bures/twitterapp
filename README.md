@@ -9,7 +9,7 @@ From root directory run the following:
 npm install
 npm build
 npm test
-npm run serve
+npm run server
 ```
 
 Application will be served on `http://localhost:3001`
